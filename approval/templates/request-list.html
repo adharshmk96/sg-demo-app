@@ -10,9 +10,6 @@
                 {{forloop.counter}}) {{ application.created|date }} - {{ application.name }} 
             </div>
             <div class="mb-2">
-                <p>Submitted by {{application.user}}</p>
-            </div>
-            <div class="mb-2">
                 Approval 1: {% if application.is_first_approved %} <span class="bg-success p-2 text-white rounded">Success</span> {% else %} <span class="bg-danger text-white p-2 rounded">Pending</span> {% endif %}  
                 Approval 2: {% if application.is_second_approved %} <span class="bg-success p-2 text-white rounded">Success</span> {% else %} <span class="bg-danger text-white p-2 rounded">Pending</span> {% endif %}
             </div>
