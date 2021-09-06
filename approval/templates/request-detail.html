@@ -58,8 +58,7 @@
             {% if object.is_second_approved %}
             <p>
                 <span class="bg-success p-2 text-white rounded">Approved</span> by
-                <span>{{object.second_approval.user}}</span> on <span>{{object.second_approval.udpated | date:"M d, Y -
-                    h:i a"}}</span>
+                <span>{{object.second_approval.user}}</span> on <span>{{object.second_approval.udpated | date:"M d, Y - h:i a"}}</span>
             </p>
             {% else %}
             <p>Not Approved
