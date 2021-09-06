@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block basic %}
+
+<nav class="nav nav-pills flex-column flex-sm-row p-3">
+    <a class="flex-sm-fill text-sm-center nav-link {% if current == 'request' %}active{% endif %}" href="/">Registration</a>
+    {% if perms.approval.level_one_approval %}
+    <a class="flex-sm-fill text-sm-center nav-link {% if current == 'app1' %}active{% endif %}" href="{% url 'request_list_a1' %}">Approval One</a>
+    {% endif %}
+    {% if perms.approval.level_two_approval %}
+    <a class="flex-sm-fill text-sm-center nav-link {% if current == 'app2' %}active{% endif %}" href="{% url 'request_list_a2' %}">Approval Two</a>
+    {% endif %}
+    <a class="flex-sm-fill text-sm-center nav-link {% if current == 'requests' %}active{% endif %}" href="{% url 'request_list' %}">Request List</a>
+    <a class="flex-sm-fill text-sm-center nav-link" href="{% url 'logout' %}">Log out</a>
+</nav>
+
+<div> User: {{request.user}}</div>
+
+<div class="p-5">
+
+    {% block content %}
+    {% endblock content %}
+</div>
+
+{% endblock basic %}

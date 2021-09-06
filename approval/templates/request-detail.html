@@ -1,0 +1,93 @@
+{% extends "dashboard.html" %}
+
+{% block content %}
+<div>
+    <div class="row">
+        <p class="col-6"><strong>SG ID</strong>: </p>
+        <p class="col-6"> {{object.sgid}}</p>
+        <p class="col-6"><strong>Name</strong>: </p>
+        <p class="col-6"> {{object.name}}</p>
+        <p class="col-6"><strong>Department</strong>: </p>
+        <p class="col-6"> {{object.department}}</p>
+        <p class="col-6"><strong>Improve Department in Which</strong>: </p>
+        <p class="col-6"> {{object.department_which}}</p>
+        <p class="col-6"><strong>Improve Constant</strong>: </p>
+        <p class="col-6"> {{object.imporove}}</p>
+    </div>
+    <p class="col-6"><strong>Before Image</strong>: </p>
+
+    <div class="d-flex justify-content-center border border-dark py-5">
+        <img src="{{object.before_image.url}}" width="600" height="600" />
+    </div>
+
+
+    <p><strong>After Image</strong>: </p>
+
+    <div class="d-flex justify-content-center border border-dark py-5">
+        <img src="{{object.after_image.url}}" width="600" height="600" />
+    </div>
+
+    <p><strong>Approval status</strong>: </p>
+    <div class="row">
+
+        <div class="col-6">
+            Approval 1
+        </div>
+        <div class="col-6">
+            {% if object.is_first_approved %}
+            <p>
+                <span class="bg-success p-2 text-white rounded">Approved</span> by
+                <span>{{object.first_approval.user}}</span> on <span>{{object.first_approval.udpated | date:"M d, Y - h:i a"}}</span>
+            </p>
+            {% else %}
+            <p>Not Approved
+                {% if perms.approval.level_one_approval %}
+                - <a href="{% url 'approve_one' pk=object.pk %}" class="btn btn-link">Click to Approve</a>
+                {% else %}
+                - Unauthorized to approve
+                {% endif %}
+            </p>
+            {% endif %}
+        </div>
+
+
+        <div class="col-6">
+            Approval 2
+        </div>
+        <div class="col-6">
+            {% if object.is_second_approved %}
+            <p>
+                <span class="bg-success p-2 text-white rounded">Approved</span> by
+                <span>{{object.second_approval.user}}</span> on <span>{{object.second_approval.udpated | date:"M d, Y -
+                    h:i a"}}</span>
+            </p>
+            {% else %}
+            <p>Not Approved
+                {% if object.is_first_approved and perms.approval.level_two_approval %}
+                - <a href="{% url 'approve_two' pk=object.pk %}" class="btn btn-link">Click to Approve</a>
+                {% else %}
+                    {% if not object.is_first_approved %}
+                    - <span>Awaiting First Approval</span>
+                    {% endif %}
+                    {% if not perms.approval.level_two_approval %}
+                    - <span>Unauthorized for Second Approval</span>
+                    {% endif %}
+                {% endif %}
+            </p>
+
+            {% endif %}
+
+        </div>
+
+
+    </div>
+
+
+    {% if object.is_second_approved %}
+    <a class="btn btn-primary" target="_blank" href="{% url 'get_report' pk=object.pk %}">Download Report</a>
+    {% endif %}
+
+
+</div>
+
+{% endblock content %}

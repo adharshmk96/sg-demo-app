@@ -1,0 +1,28 @@
+{% extends "dashboard.html" %}
+
+{% block content %}
+<h1>All requests</h1>
+<ul class="p-3">
+    {% for application in object_list %}
+    <li class="d-flex align-items-center mb-2 border border-info p-2">
+        <div>
+            <div class="mb-2">
+                {{forloop.counter}}) {{ application.created|date }} - {{ application.name }} 
+            </div>
+            <div class="mb-2">
+                <p>Submitted by {{application.user}}</p>
+            </div>
+            <div class="mb-2">
+                Approval 1: {% if application.is_first_approved %} <span class="bg-success p-2 text-white rounded">Success</span> {% else %} <span class="bg-danger text-white p-2 rounded">Pending</span> {% endif %}  
+                Approval 2: {% if application.is_second_approved %} <span class="bg-success p-2 text-white rounded">Success</span> {% else %} <span class="bg-danger text-white p-2 rounded">Pending</span> {% endif %}
+            </div>
+        </div>
+        
+        <a href="{% url 'request_detail' pk=application.pk %}" style="margin-left:auto;" class="btn btn-success d-block">View
+            Details</a>
+    </li>
+    {% empty %}
+    <li class="d-flex align-items-center mb-2"> No requests yet.</li>
+    {% endfor %}
+</ul>
+{% endblock content %}

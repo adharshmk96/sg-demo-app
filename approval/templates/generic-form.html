@@ -1,0 +1,11 @@
+{% load crispy_forms_tags %}
+
+<form method="post" class="uniForm" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form|crispy }}
+
+    <div class="pt-5">
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <input type="reset" class="btn btn-secondary"  value="Reset"/>
+    </div>
+</form>

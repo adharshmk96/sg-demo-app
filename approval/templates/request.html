@@ -1,0 +1,16 @@
+{% extends "dashboard.html" %}
+{% load static %}
+
+{% block content %}
+{% include 'generic-form.html' with form=form %}
+
+<div class="p-5">
+    <a id="populate-sgid" class="btn btn-link" url="{% url 'populate_sgid' %}">Populate SGID</a>
+    <a id="populate-idw" class="btn btn-link" url="{% url 'populate_idw' %}">Populate Dept Option</a>
+</div>
+
+{% endblock content %}
+
+{% block js %}
+    <script src="{% static 'approval/populate.js' %}"></script>
+{% endblock js %}

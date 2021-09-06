@@ -1,0 +1,17 @@
+{% extends "dashboard.html" %}
+
+{% block content %}
+<h1>Pending Approval</h1>
+<ul class="p-3">
+    {% for application in object_list %}
+    <li class="d-flex align-items-center mb-2 border border-info p-2">
+        <p>{{forloop.counter}}) {{ application.created|date }} - {{ application.app_request }}</p>
+        <p>Submitted by {{application.user}}</p>
+        <a href="{% url 'request_detail' pk=application.app_request.pk %}" style="margin-left:auto;" class="btn btn-success d-block">View
+            Details</a>
+    </li>
+    {% empty %}
+    <li class="d-flex align-items-center mb-2"> No requests yet.</li>
+    {% endfor %}
+</ul>
+{% endblock content %}
