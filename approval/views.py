@@ -61,6 +61,7 @@ class RequestCreateView(CreateView):
         return HttpResponseRedirect(res)
     
 @method_decorator(login_required, name='dispatch')
+@method_decorator(permission_required('approval.level_one_approval',raise_exception=True), name='dispatch')
 class ApprovalOneListView(ListView):
     model = ApprovalOne
     template_name = "approval1_list.html"
@@ -86,6 +87,7 @@ class RequestDetailView(DetailView):
     
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(permission_required('approval.level_two_approval',raise_exception=True), name='dispatch')
 class ApprovalTwoListView(ListView):
     model = ApprovalTwo
     template_name = "approval1_list.html"
@@ -133,6 +135,7 @@ class PopulateIDW(View):
             'status': True
         })
 
+@permission_required('approval.level_one_approval',raise_exception=True)
 def approval_one(request, *args, **kwargs ):
     pk = kwargs.get('pk')
 
@@ -155,6 +158,7 @@ def approval_one(request, *args, **kwargs ):
     return redirect('request_list')
 
 
+@permission_required('approval.level_two_approval',raise_exception=True)
 def approval_two(request, *args, **kwargs ):
     pk = kwargs.get('pk')
 
